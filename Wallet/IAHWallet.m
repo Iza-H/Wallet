@@ -18,7 +18,7 @@
     return [self.moneys count];
 }
 
--(NSDictionary *) getNumberOfDifferentCurrency{
+-(NSDictionary *) getDictionaryWithDifferentCurrency{
     NSMutableDictionary *currency = [[NSMutableDictionary alloc] init];
     for (int i = 0 ; i<[self.moneys count]; i++){
         IAHMoney *m = [self.moneys objectAtIndex:i];

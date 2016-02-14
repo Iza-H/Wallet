@@ -11,7 +11,7 @@
 
 @interface IAHWalletTableViewController ()
 @property (nonatomic, strong) IAHWallet *model;
-@property (nonatomic, strong) NSDictionary *currency;
+@property (nonatomic, strong) NSDictionary *currencyDictionary;
 @end
 
 @implementation IAHWalletTableViewController
@@ -19,7 +19,7 @@
 -(id) initWithModel: (IAHWallet *) model{
     if (self = [super initWithStyle:UITableViewStylePlain]){
         _model = model;
-        _currency =  [model getNumberOfDifferentCurrency];
+        _currencyDictionary =  [model getDictionaryWithDifferentCurrency];
     }
     return self;
 }
@@ -44,16 +44,16 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self.model getNumberOfDifferentCurrency] count] + 1;
+    return [self.currencyDictionary count] + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //NSDictionary *currency =  [self.model getNumberOfDifferentCurrency];
-    NSArray *keys = [self.currency allKeys];
-    if ([self.currency count]<=section){
+    NSArray *keys = [self.currencyDictionary allKeys];
+    if ([self.currencyDictionary count]<=section){
         return 1;
     } else{
-        return [[self.currency objectForKey: [keys objectAtIndex:section]] count] + 1;
+        return [[self.currencyDictionary objectForKey: [keys objectAtIndex:section]] count] + 1;
     }
     
 }
@@ -67,10 +67,10 @@
         
     }
 
-    if (indexPath.section<[self.currency count]){
-        NSArray *keys = [self.currency allKeys];
+    if (indexPath.section<[self.currencyDictionary count]){
+        NSArray *keys = [self.currencyDictionary allKeys];
         NSString *currencyName = [keys objectAtIndex:indexPath.section];
-        NSArray*amounts = [self.currency objectForKey:currencyName];
+        NSArray*amounts = [self.currencyDictionary objectForKey:currencyName];
         if (indexPath.row < [amounts count]){
             cell.textLabel.text = [NSString stringWithFormat:@"%@", [amounts objectAtIndex:indexPath.row]] ;
         }else{
@@ -78,17 +78,12 @@
             for (int i = 0; i<[amounts count]; i++){
                 sum = [sum plus: [[IAHMoney alloc] initWithAmount:[[amounts objectAtIndex:i] integerValue]  currency:currencyName]];
             }
-            //[self.sumWallet setObject:sum forKey:currencyName];
             cell.textLabel.text = [NSString stringWithFormat:@"Total %@ - %@" , [keys objectAtIndex:indexPath.section], [sum amount]] ;
-            //cell.textLabel.text = [NSString stringWithFormat:@"Total %@ - %@" , currencyName, [[self.sumWallet objectForKey:currencyName] amount]] ;
         }
     }else{
         IAHBroker *broker = [IAHBroker new];
         [broker addRate:2 fromCurrency:@"EUR" toCurrency:@"USD"];
-        //IAHWallet *wallet = [[IAHWallet alloc] initWithAmount:40 currency:@"EUR"];
-        //[wallet plus: [IAHMoney dollarWithAmount:20] ];
         IAHMoney *reduced = [broker reduce:self.model toCurrency:@"EUR"];
-        //XCTAssertEqualObjects(reduced, [IAHMoney dollarWithAmount:100], @"40E + 20$ = 100$, 2:1");
         cell.textLabel.text = [NSString stringWithFormat: @"%@",[reduced amount]] ;
     }
     
@@ -99,8 +94,8 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     //NSDictionary *currency =  [self.model getNumberOfDifferentCurrency];
-    NSArray *keys = [self.currency allKeys];
-    if ([self.currency count]<=section){
+    NSArray *keys = [self.currencyDictionary allKeys];
+    if ([self.currencyDictionary count]<=section){
         return @"TOTAL IN EUR";
     } else{
         return  [keys objectAtIndex:section];

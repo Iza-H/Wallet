@@ -42,7 +42,7 @@
     [wallet plus:[IAHMoney dollarWithAmount:6]];
     [wallet plus:[IAHMoney dollarWithAmount:14]];
     [wallet plus:[IAHMoney euroWithAmount:15]];
-    NSDictionary *result = [wallet getNumberOfDifferentCurrency];
+    NSDictionary *result = [wallet getDictionaryWithDifferentCurrency];
     NSInteger countcurrency = [result count];
     XCTAssertEqual(countcurrency, 2, @"The numebr of differents currents should be 2");
     NSInteger value = [[[result objectForKey:@"USD"] objectAtIndex:0] integerValue];

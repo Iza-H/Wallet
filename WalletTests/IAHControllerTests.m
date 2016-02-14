@@ -57,15 +57,15 @@
 
 -(void) testTheTableHasOneSection{
     NSInteger sections= [self.walletVC numberOfSectionsInTableView: nil];
-    XCTAssertEqual(sections, 3, @"The number of section should be 3");
+    XCTAssertEqual(sections, [[self.wallet getDictionaryWithDifferentCurrency] count] +  1, @"The number of sections should be a number of currencies + 1");
     
 }
 
--(void) testTahtNumberOfCellsIsNumberOfMoneysPlusOne{
-    NSArray *obj = [[self.wallet getNumberOfDifferentCurrency] objectForKey:@"EUR"];
+-(void) testThatNumberOfCellsIsNumberOfMoneysPlusOne{
+    NSArray *obj = [[self.wallet getDictionaryWithDifferentCurrency] objectForKey:@"EUR"];
     NSInteger n = [obj count] + 1;
     NSInteger numbersOfRow = [self.walletVC tableView:nil numberOfRowsInSection:0];
-    XCTAssertEqual(n, [self.walletVC tableView:nil numberOfRowsInSection:0], @"Number of celss is the number of moneys plus 1");
+    XCTAssertEqual(n, [self.walletVC tableView:nil numberOfRowsInSection:0], @"Number of cells is the number of moneys plus 1");
 }
 
 @end
