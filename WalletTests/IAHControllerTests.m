@@ -48,14 +48,14 @@
     
 }
 
--(void) testTheTableHasOneSection{
+/*-(void) testTheTableHasOneSection{
     NSInteger sections= [self.walletVC numberOfSectionsInTableView: nil];
     XCTAssertEqual(sections, 1, @"The number of section should be 1");
     
-}
+}*/
 
--(void) testTahtNumberOfCellsIsNumberOfMoneysPlusOne{
+/*-(void) testTahtNumberOfCellsIsNumberOfMoneysPlusOne{
     XCTAssertEqual(self.wallet.count +1, [self.walletVC tableView:nil numberOfRowsInSection:0], @"Number of celss is the number of moneys plus 1");
-}
+}*/
 
 @end

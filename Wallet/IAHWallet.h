@@ -13,5 +13,8 @@
 @property (nonatomic, readonly) NSUInteger count;
 -(id<IAHMoney>)reduceToCurrency: (NSString*) currency withBroker: (IAHBroker *) broker;
 -(void) subscribeToMemoryWarning:(NSNotificationCenter *) nc;
+-(IAHMoney*) getMoneyAtIndex: (NSInteger) index;
+-(NSDictionary *) getNumberOfDifferentCurrency;
+
 
 @end

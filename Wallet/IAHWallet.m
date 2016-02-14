@@ -18,6 +18,30 @@
     return [self.moneys count];
 }
 
+-(NSDictionary *) getNumberOfDifferentCurrency{
+    NSMutableDictionary *currency = [[NSMutableDictionary alloc] init];
+    for (int i = 0 ; i<[self.moneys count]; i++){
+        IAHMoney *m = [self.moneys objectAtIndex:i];
+        
+        if ([currency objectForKey: [m currency]] == nil){
+            NSMutableArray *money = [[NSMutableArray alloc] init];
+            [money addObject: [m amount] ];
+            [currency setObject:money forKey:[m currency]];
+        }else{
+             NSMutableArray *money = [currency objectForKey: [m currency]];
+            [money addObject: [m amount]];
+            [currency setObject:money forKey:[m currency]];
+        }
+    }
+    
+    return currency;
+}
+
+
+-(IAHMoney*) getMoneyAtIndex: (NSInteger) index{
+    return [self.moneys objectAtIndex: index ];
+}
+
 -(id) initWithAmount:(NSInteger)amount currency:(NSString *)currency{
     if(self=[super init]){
         IAHMoney *money = [[IAHMoney alloc] initWithAmount:amount currency:currency];

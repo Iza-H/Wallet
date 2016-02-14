@@ -37,6 +37,19 @@
     
 }
 
+- (void) testGetNumberOfDifferentCurrency{
+    IAHWallet *wallet = [[IAHWallet alloc] initWithAmount:25 currency:@"EUR"];
+    [wallet plus:[IAHMoney dollarWithAmount:6]];
+    [wallet plus:[IAHMoney dollarWithAmount:14]];
+    [wallet plus:[IAHMoney euroWithAmount:15]];
+    NSDictionary *result = [wallet getNumberOfDifferentCurrency];
+    NSInteger countcurrency = [result count];
+    XCTAssertEqual(countcurrency, 2, @"The numebr of differents currents should be 2");
+    NSInteger value = [[[result objectForKey:@"USD"] objectAtIndex:0] integerValue];
+    XCTAssertEqual( value, 6 , @"The number of the first dollar should be 6");
+    
+}
+
 
 
 @end

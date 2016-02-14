@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "IAHWalletTableViewController.h"
 
 @interface AppDelegate ()
 
@@ -14,9 +15,21 @@
 
 @implementation AppDelegate
 
+-(IAHWallet *) createExampleData{
+    IAHWallet *wallet = [[IAHWallet alloc] initWithAmount:25 currency:@"EUR"];
+    [wallet plus:[IAHMoney dollarWithAmount:6]];
+    [wallet plus:[IAHMoney dollarWithAmount:14]];
+    [wallet plus:[IAHMoney euroWithAmount:15]];
+    return wallet;
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    IAHWalletTableViewController *tVC = [[IAHWalletTableViewController  alloc] initWithModel: [self createExampleData]];
+    self.window.rootViewController = tVC;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
