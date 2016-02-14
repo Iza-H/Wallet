@@ -29,9 +29,16 @@
     self.label = [[UILabel alloc] initWithFrame:CGRectZero];
     self.simpleVC.displayLabel = self.label;
 
-    self.wallet = [[IAHWallet alloc] initWithAmount:1 currency:@"USD"];
-    [self.wallet plus: [IAHMoney euroWithAmount:1]];
+    //self.wallet = [[IAHWallet alloc] initWithAmount:1 currency:@"USD"];
+    //[self.wallet plus: [IAHMoney euroWithAmount:1]];
+    //self.walletVC = [[IAHWalletTableViewController alloc] initWithModel: self.wallet];
+    
+    self.wallet = [[IAHWallet alloc] initWithAmount:25 currency:@"EUR"];
+    [self.wallet plus:[IAHMoney dollarWithAmount:6]];
+    [self.wallet plus:[IAHMoney dollarWithAmount:14]];
+    [self.wallet plus:[IAHMoney euroWithAmount:15]];
     self.walletVC = [[IAHWalletTableViewController alloc] initWithModel: self.wallet];
+    
 }
 
 - (void)tearDown {
@@ -48,14 +55,17 @@
     
 }
 
-/*-(void) testTheTableHasOneSection{
+-(void) testTheTableHasOneSection{
     NSInteger sections= [self.walletVC numberOfSectionsInTableView: nil];
-    XCTAssertEqual(sections, 1, @"The number of section should be 1");
+    XCTAssertEqual(sections, 3, @"The number of section should be 3");
     
-}*/
+}
 
-/*-(void) testTahtNumberOfCellsIsNumberOfMoneysPlusOne{
-    XCTAssertEqual(self.wallet.count +1, [self.walletVC tableView:nil numberOfRowsInSection:0], @"Number of celss is the number of moneys plus 1");
-}*/
+-(void) testTahtNumberOfCellsIsNumberOfMoneysPlusOne{
+    NSArray *obj = [[self.wallet getNumberOfDifferentCurrency] objectForKey:@"EUR"];
+    NSInteger n = [obj count] + 1;
+    NSInteger numbersOfRow = [self.walletVC tableView:nil numberOfRowsInSection:0];
+    XCTAssertEqual(n, [self.walletVC tableView:nil numberOfRowsInSection:0], @"Number of celss is the number of moneys plus 1");
+}
 
 @end

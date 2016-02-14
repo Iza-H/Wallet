@@ -19,13 +19,14 @@
 -(id) initWithModel: (IAHWallet *) model{
     if (self = [super initWithStyle:UITableViewStylePlain]){
         _model = model;
+        _currency =  [model getNumberOfDifferentCurrency];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.currency =  [self.model getNumberOfDifferentCurrency];
+    //self.currency =  [self.model getNumberOfDifferentCurrency];
     
     
     // Uncomment the following line to preserve selection between presentations.
